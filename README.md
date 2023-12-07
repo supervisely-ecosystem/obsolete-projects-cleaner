@@ -5,7 +5,7 @@
 
 <p align='center'>
   <a href='#overview'>Overview</a> •
-  <a href='#application-settings'>How to Run</a>
+  <a href='#application-settings'>Application Settings</a>
 </p>
 
 [![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/obsolete-dataset-cleaner)
