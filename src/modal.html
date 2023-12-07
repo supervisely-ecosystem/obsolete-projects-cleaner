@@ -1,0 +1,57 @@
+<div>
+  <sly-card>
+    <div style="margin: 10px 10px 0 0">
+      <sly-field
+        title="Select Workspace"
+        description="For whose projects you want to apply cleaning"
+        style="margin: 6px 10px 0x 0"
+      >
+        <el-checkbox
+          style="margin: 10px 10px 0 8px"
+          v-model="state.allWorkspaces"
+          >All available workspaces</el-checkbox
+        >
+        <sly-select-team-workspace
+          style="margin: 10px 10px 6px 8px"
+          v-if="!state.allWorkspaces"
+          :team-id.sync="state.teamId"
+          :workspace-id.sync="state.workspaceId"
+        ></sly-select-team-workspace>
+      </sly-field>
+
+      <sly-field
+        title="Dataset Age"
+        description="Set the number of days that determines that the dataset has not been updated on all of these days starting now"
+        style="margin: 16px 10px 10px 0"
+      >
+        <el-input-number
+          style="margin: 0 0 0 8px"
+          v-model="state.age"
+          :min="1"
+          :max="360"
+          show-input
+        ></el-input-number>
+      </sly-field>
+
+      <sly-field
+        title="Sleep Time"
+        description="Set the number of days the application will wait for the next cleaning iteration after the current one is complete"
+        style="margin: 6px 10px 0x 0"
+        v-if="!state.stop"
+      >
+        <el-input-number
+          style="margin: 0 0 0 8px"
+          v-model="state.sleep"
+          :min="1"
+          :max="60"
+          show-input
+        ></el-input-number>
+      </sly-field>
+      <sly-field title="Additional Settings" style="margin: 6px 10px 0x 0">
+        <el-checkbox style="margin: 10px 10px 0 8px" v-model="state.stop"
+          >One-time task</el-checkbox
+        >
+      </sly-field>
+    </div>
+  </sly-card>
+</div>
