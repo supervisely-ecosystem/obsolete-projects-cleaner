@@ -1,27 +1,25 @@
 {
-  "name": "Obsolete Datasets Cleaner",
-  "description": "Clean unused datasets from projects",
+  "name": "Obsolete Projects Cleaner",
+  "description": "Delete unused projects or their datasets in large batches",
   "type": "app",
   "version": "2.0.0",
   "categories": ["system"],
   "restart_policy": "on_error",
   "only_for_instance_admins": false,
-  "docker_image": "supervisely/system:6.72.206",
+  "docker_image": "supervisely/system:6.72.211",
   "min_instance_version": "6.8.17",
-  "main_script": "src/main.py",
-  "modal_template": "src/modal.html",
+  "entrypoint": "python -m uvicorn src.src:main --host 0.0.0.0 --port 8000",
   "modal_template_state": {
     "age": 1,
     "allWorkspaces": true,
     "stop": false
   },
   "task_location": "workspace_tasks",
-  "headless": true,
   "release": {
     "version": "v0.0.1",
     "name": "init"
   },
-  "poster": "https://github.com/supervisely-ecosystem/obsolete-dataset-cleaner/assets/57998637/34142660-e406-4474-b86c-3ef541c1b7f5",
-  "icon": "https://github.com/supervisely-ecosystem/obsolete-dataset-cleaner/assets/57998637/6a9b0dc3-5ef6-46f2-8a7c-48b4ab5b351c",
+  "poster": "https://github.com/supervisely-ecosystem/obsolete-projects-cleaner/assets/57998637/aae36fe0-33b2-41f9-9968-a1c4ab119674",
+  "icon": "https://github.com/supervisely-ecosystem/obsolete-projects-cleaner/assets/57998637/a6c4f855-3ea6-44ba-be40-fe6e0291b239",
   "icon_cover": true
 }

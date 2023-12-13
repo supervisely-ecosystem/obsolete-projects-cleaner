@@ -1,41 +1,58 @@
 <div align='center' markdown> 
-<img src="https://github.com/supervisely-ecosystem/obsolete-dataset-cleaner/assets/57998637/34142660-e406-4474-b86c-3ef541c1b7f5"/> <br>
+<img src="https://github.com/supervisely-ecosystem/obsolete-projects-cleaner/assets/57998637/aae36fe0-33b2-41f9-9968-a1c4ab119674"/> <br>
 
-# Obsolete Datasets Cleaner
+# Obsolete Projects Cleaner
 
 <p align='center'>
   <a href='#overview'>Overview</a> •
-  <a href='#application-settings'>Application Settings</a>
+  <a href='#how-to-run'>How to Run</a>
 </p>
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/obsolete-dataset-cleaner)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/obsolete-projects-cleaner)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/obsolete-dataset-cleaner)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/obsolete-dataset-cleaner.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/obsolete-dataset-cleaner.png)](https://supervise.ly)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/obsolete-projects-cleaner)
+[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/obsolete-projects-cleaner.png)](https://supervise.ly)
+[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/obsolete-projects-cleaner.png)](https://supervise.ly)
 
 </div>
 
 ## Overview
 
-This application allows administrators to purge projects of obsolete datasets without saving them to the `Trash Bin`.
+This application allows deleting unused `Projects` or their `Datasets` in large batches.
   
-## Application Settings
+## How to Run
 
-### Select Workspace
+### All available Workspaces
 
-Here you can choose one of:
- - a specific workspace for whose projects all datasets will be deleted
- - all available workspaces for whose projects all datasets will be deleted
+ - **Checked**: `Projects` or its `Datasets` will be deleted in all available `Workspaces`.
+ - **Unchecked**: `Projects` or its `Datasets` will be deleted in selected `Workspace`.
 
-### Dataset Age
+### All available Projects
 
-Set the number of days to determine how long ago the datasets were created, starting now.
+ℹ️ Only for entity type `Datasets`.
 
-### Sleep Time
+ - **Checked**: `Datasets` will be deleted in all available `Projects` of selected `Workspace`.
+ - **Unchecked**: `Datasets` will be deleted in selected `Project` of selected `Workspace`
 
-Set the number of days the application will wait for the next cleaning iteration after the current one is complete.
+### Entity type
+  - **`Projects`**
+  - **`Datasets`**
 
-### Additional Settings
+### Filter criteria
 
-Check the `One-time task` checkbox to run the application only once.
+ - **Updated**
+ - **Created**
+
+Set the number of days to determine how long ago the datasets were created or updated last time.
+  
+### Method
+ - **Delete to Trash Bin**
+ - **Delete permanently**
+
+
+### Launch type
+ - **Repetitive Task**
+    - **Sleep day(s)**: Set the number of days the application will wait for the next cleaning iteration after the current one is complete.
+ - **One-time Task**: run the application only once.
+
+
