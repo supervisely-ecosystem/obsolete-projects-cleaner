@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 
 import supervisely as sly
 
-import globals as g
-import ui as ui
+import src.globals as g
+import src.ui as ui
 
 app = sly.Application(layout=ui.layout)
 

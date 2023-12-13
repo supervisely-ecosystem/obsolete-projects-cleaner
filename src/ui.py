@@ -14,8 +14,8 @@ from supervisely.app.widgets import (
     Text,
 )
 
-import globals as g
-import main as m
+import src.globals as g
+import src.main as m
 
 #### Radio Groups ####
 
@@ -177,7 +177,7 @@ def change_setting_status(status: Literal["enable", "disable"]):
 
 
 def show_globals():
-    print(
+    sly.logger.debug(
         f"""
             Settings:
                 task_id = {g.task_id} | workspace_id = {g.workspace_id}
