@@ -8,7 +8,7 @@
   "only_for_instance_admins": false,
   "docker_image": "supervisely/system:6.72.211",
   "min_instance_version": "6.8.17",
-  "entrypoint": "python -m uvicorn src:main --host 0.0.0.0 --port 8000",
+  "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
   "modal_template_state": {
     "age": 1,
     "allWorkspaces": true,
