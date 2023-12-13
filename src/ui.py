@@ -14,8 +14,8 @@ from supervisely.app.widgets import (
     Text,
 )
 
-import src.globals as g
-import src.main as m
+import globals as g
+import main as m
 
 #### Radio Groups ####
 

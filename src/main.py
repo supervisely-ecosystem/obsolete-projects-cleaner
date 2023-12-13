@@ -3,11 +3,10 @@ from datetime import datetime, timedelta
 
 import supervisely as sly
 
-import src.globals as g
-import src.ui as ui
-from src.ui import layout
+import globals as g
+import ui as ui
 
-app = sly.Application(layout=layout)
+app = sly.Application(layout=ui.layout)
 
 
 def get_dataset_infos():
