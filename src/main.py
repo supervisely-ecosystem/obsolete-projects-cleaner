@@ -109,7 +109,7 @@ def delete_entities():
                     else:
                         g.api.dataset.remove_batch(ids)
                 elif g.item_type == "project":
-                    ids = [item_info.get("id") for item_info in g.items_to_delete]
+                    ids = [item_info.id for item_info in g.items_to_delete]
                     if g.delete_permanently:
                         g.api.project.archive(ids)
                     else:
