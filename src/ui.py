@@ -30,7 +30,7 @@ entities_field = Field(title="Entity type", content=entities_container)
 
 
 entity_age_input = InputNumber(g.age, 1, 720)
-entity_age_text = Text(text="Day(s) ago")
+entity_age_text = Text(text="Day(s) ago or earlier")
 entity_age_container = Container([entity_age_text, entity_age_input])
 filter_criteria_items = [
     RadioGroup.Item(value="updated_at", label="Updated"),
