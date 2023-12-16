@@ -1,1 +1,1 @@
-supervisely==6.72.211
+supervisely==6.72.218

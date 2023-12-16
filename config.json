@@ -5,15 +5,9 @@
   "version": "2.0.0",
   "categories": ["system"],
   "restart_policy": "on_error",
-  "only_for_instance_admins": false,
-  "docker_image": "supervisely/system:6.72.211",
-  "min_instance_version": "6.8.17",
+  "docker_image": "supervisely/system:6.72.218",
+  "min_instance_version": "6.8.62",
   "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
-  "modal_template_state": {
-    "age": 1,
-    "allWorkspaces": true,
-    "stop": false
-  },
   "task_location": "workspace_tasks",
   "release": {
     "version": "v0.0.1",

@@ -9,12 +9,7 @@ import src.ui as ui
 app = sly.Application(layout=ui.layout)
 
 
-def get_dataset_infos():
-    kwargs = {}
-    filters = []
-
-    kwargs["page"] = "all"  # to get all available datasets in a single 2nd request
-
+def apply_filters(kwargs: dict, filters: list):
     if g.age != 0:
         current_datetime = datetime.utcnow()
         dataset_age = current_datetime - timedelta(days=g.age)
@@ -41,7 +36,14 @@ def get_dataset_infos():
         }
         filters.append(ws_filter)
 
-    if g.project_id is not None and g.all_projects is False:
+    return kwargs if len(filters) == 0 else {**kwargs, "filters": filters}
+
+
+def get_dataset_infos():
+    kwargs = {"page": "all"}  # to get all available datasets in a single 2nd request
+    filters = []
+
+    if g.project_id is not None and not g.all_projects:
         pr_filter = {
             "field": "projectId",
             "operator": "=",
@@ -49,29 +51,20 @@ def get_dataset_infos():
         }
         filters.append(pr_filter)
 
-    if len(filters) != 0:
-        kwargs["filters"] = filters
-
+    kwargs = apply_filters(kwargs, filters)
     response_json = g.api.dataset.get_list_all(**kwargs)
 
     return response_json.get("entities")
 
 
 def get_project_infos():
-    kwargs = {}
-    kwargs["to_day"] = g.age
-    kwargs["skip_exported"] = True  # do not delete archived projects
+    kwargs = {"page": "all"}  # to get all available projects in a single 2nd request
+    filters = []
 
-    project_infos = g.api.project.get_archivation_list(**kwargs)
+    kwargs = apply_filters(kwargs, filters)
+    response_json = g.api.project.get_list_all(**kwargs)
 
-    if g.workspace_id is not None:
-        filtered_project_infos = [
-            project_info
-            for project_info in project_infos
-            if project_info.workspace_id == g.workspace_id
-        ]
-        return filtered_project_infos
-    return project_infos
+    return response_json.get("entities")
 
 
 def adjust_workspace_id():
@@ -103,7 +96,7 @@ def delete_entities():
             ui.delete_btn.icon = "zmdi zmdi-wrench"
             if len(g.items_to_delete) != 0:
                 if g.item_type == "dataset":
-                    ids = [item_info.get("id") for item_info in g.items_to_delete]
+                    ids = [item_info.id for item_info in g.items_to_delete]
                     if g.delete_permanently:
                         g.api.dataset.remove_permanently(ids)
                     else:
@@ -111,7 +104,7 @@ def delete_entities():
                 elif g.item_type == "project":
                     ids = [item_info.id for item_info in g.items_to_delete]
                     if g.delete_permanently:
-                        g.api.project.archive(ids)
+                        g.api.project.remove_permanently(ids)
                     else:
                         g.api.project.remove_batch(ids)
 
@@ -127,7 +120,7 @@ def delete_entities():
                 ui.delete_btn.text = "Finished"
                 break
             else:
-                next_run = (datetime.utcnow() + timedelta(seconds=g.sleep_time)).strftime(
+                next_run = (datetime.utcnow() + timedelta(days=g.sleep_days)).strftime(
                     "%Y-%m-%d %H:%M:%S UTC+0"
                 )
                 g.api.logger.info(
@@ -145,5 +138,5 @@ def delete_entities():
                 ui.selected_entities_field.set(
                     text=f"{len(g.items_to_delete)} {g.item_type}(s) deleted", status="success"
                 )
-                time.sleep(g.sleep_time)
+                time.sleep(g.sleep_days * 86400)
         app.stop()
