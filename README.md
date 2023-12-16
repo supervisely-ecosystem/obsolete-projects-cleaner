@@ -18,7 +18,7 @@
 
 ## Overview
 
-This application allows deleting unused `Projects` or their `Datasets` in large batches.
+This application allows you to delete unused `Projects` or their `Datasets` in large batches by a given filtering criterion.
   
 ## How to Run
 
@@ -35,24 +35,26 @@ This application allows deleting unused `Projects` or their `Datasets` in large 
  - **Unchecked**: `Datasets` will be deleted in selected `Project` of selected `Workspace`
 
 ### Entity type
-  - **`Projects`**
-  - **`Datasets`**
+  - **`Projects`** - You can think of a Project as a superfolder with data and metadata, like classes and tags. Every dataset inside the project will share the same metadata and have the same classes and tags defined on the project-level. [Read more.](https://docs.supervisely.com/data-organization/projects)
+  - **`Datasets`** - Dataset is the second most important concept in Supervisely. Here is where your labeled and unlabeled images and images, videos, and so on. There is no more levels: images or videos are directly attached to a dataset. [Read more.](https://docs.supervisely.com/data-organization/projects/datasets)
 
 ### Filter criteria
 
- - **Updated**
- - **Created**
+ - **Updated** - specifies the timestamp of the last update, all entities updated before this timestamp will be deleted.
+ - **Created** - specifies the creation timestamp, all entities created before this timestamp will be deleted.
 
-Set the number of days to determine how long ago the datasets were created or updated last time.
+    The time stamp is calculated in days, the maximum value that can be set is 720 days.
   
 ### Method
- - **Delete to Trash Bin**
- - **Delete permanently**
+ - **Delete to Trash Bin** - this method will not delete your data immediately, it will be stored in the recycle bin for 7 days before being completely deleted.
+ - **Delete permanently** - this method will immediately delete data. This means that all data will be deleted from the database with no possibility to restore it.
 
 
 ### Launch type
  - **Repetitive Task**
-    - **Sleep day(s)**: Set the number of days the application will wait for the next cleaning iteration after the current one is complete.
- - **One-time Task**: run the application only once.
+    - **Sleep day(s)** - the number of days the application will wait for the next cleaning iteration after the current one is complete. 
+      
+      The maximum value that can be set is 180 days.
+ - **One-time Task** - run the application only once.
 
 

@@ -29,7 +29,7 @@ entities_container = Container([entities_radio_group], style="margin-left: 20px;
 entities_field = Field(title="Entity type", content=entities_container)
 
 
-entity_age_input = InputNumber(g.age, 1, 360)
+entity_age_input = InputNumber(g.age, 1, 720)
 entity_age_text = Text(text="Day(s) ago")
 entity_age_container = Container([entity_age_text, entity_age_input])
 filter_criteria_items = [
@@ -86,7 +86,7 @@ all_projects_checkbox.check()
 all_projects_checkbox.hide()
 
 sleep_days_input = InputNumber(g.sleep_days, 1, 180)
-sleep_days_text = Text(text="Sleep days")
+sleep_days_text = Text(text="Sleep day(s)")
 sleep_days_container = Container([sleep_days_text, sleep_days_input], style="margin-left: 27px;")
 launch_type_items = [
     RadioGroup.Item(value="cycle", label="Repetitive Task"),
