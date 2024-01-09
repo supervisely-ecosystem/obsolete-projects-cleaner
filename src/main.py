@@ -1,5 +1,6 @@
 import time
 from datetime import datetime, timedelta
+from typing import Union, List
 
 import supervisely as sly
 
@@ -39,7 +40,7 @@ def apply_filters(kwargs: dict, filters: list):
     return kwargs if len(filters) == 0 else {**kwargs, "filters": filters}
 
 
-def get_dataset_infos():
+def get_dataset_infos() -> list:
     kwargs = {"page": "all"}  # to get all available datasets in a single 2nd request
     filters = []
 
@@ -57,7 +58,7 @@ def get_dataset_infos():
     return response_json.get("entities")
 
 
-def get_project_infos():
+def get_project_infos() -> list:
     kwargs = {"page": "all"}  # to get all available projects in a single 2nd request
     filters = []
 
@@ -80,6 +81,20 @@ def get_items():
         g.items_to_delete = get_dataset_infos()
 
 
+def prepare_batches(item_infos: List[Union[sly.ProjectInfo, sly.DatasetInfo]]):
+    batches = []
+    for item_info in item_infos:
+        if any(d["team_id"] == item_info.team_id for d in batches):
+            for d in batches:
+                if d["team_id"] == item_info.team_id:
+                    d["ids"].append(item_info.id)
+                    break
+        else:
+            batch = {"team_id": item_info.team_id, "ids": [item_info.id]}
+            batches.append(batch)
+    return batches
+
+
 def delete_entities():
     with app.handle_stop():
         iteration = 0
@@ -95,18 +110,19 @@ def delete_entities():
             ui.delete_btn.text = "Processing"
             ui.delete_btn.icon = "zmdi zmdi-wrench"
             if len(g.items_to_delete) != 0:
-                if g.item_type == "dataset":
-                    ids = [item_info.id for item_info in g.items_to_delete]
-                    if g.delete_permanently:
-                        g.api.dataset.remove_permanently(ids)
-                    else:
-                        g.api.dataset.remove_batch(ids)
-                elif g.item_type == "project":
-                    ids = [item_info.id for item_info in g.items_to_delete]
-                    if g.delete_permanently:
-                        g.api.project.remove_permanently(ids)
-                    else:
-                        g.api.project.remove_batch(ids)
+                batches = prepare_batches(g.items_to_delete)
+                for batch in batches:
+                    ids = batch["ids"]
+                    if g.item_type == "dataset":
+                        if g.delete_permanently:
+                            g.api.dataset.remove_permanently(ids)
+                        else:
+                            g.api.dataset.remove_batch(ids)
+                    elif g.item_type == "project":
+                        if g.delete_permanently:
+                            g.api.project.remove_permanently(ids)
+                        else:
+                            g.api.project.remove_batch(ids)
 
             if g.one_time_task:
                 g.api.logger.info(
