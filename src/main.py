@@ -81,7 +81,7 @@ def get_items():
         g.items_to_delete = get_dataset_infos()
 
 
-def prepare_batches(item_infos: List[Union[sly.ProjectInfo, sly.DatasetInfo]]):
+def batches_by_team(item_infos: List[Union[sly.ProjectInfo, sly.DatasetInfo]]):
     batches = []
     for item_info in item_infos:
         if any(d["team_id"] == item_info.team_id for d in batches):
@@ -110,7 +110,7 @@ def delete_entities():
             ui.delete_btn.text = "Processing"
             ui.delete_btn.icon = "zmdi zmdi-wrench"
             if len(g.items_to_delete) != 0:
-                batches = prepare_batches(g.items_to_delete)
+                batches = batches_by_team(g.items_to_delete)
                 for batch in batches:
                     ids = batch["ids"]
                     if g.item_type == "dataset":
